@@ -74,11 +74,8 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.394.0",
     "match-sorter": "^6.3.4",
-<<<<<<< HEAD
     "msedge-tts": "^2.0.0",
     "next-auth": "^4.24.11",
-=======
->>>>>>> main
     "qrcode.react": "^4.2.0",
     "rc-input-number": "^7.4.2",
     "react": "^18.3.1",
