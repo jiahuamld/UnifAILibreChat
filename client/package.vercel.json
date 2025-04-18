@@ -1,32 +1,13 @@
 {
   "name": "@librechat/frontend",
   "version": "v0.7.7",
-  "description": "",
+  "description": "LibreChat前端",
   "type": "module",
   "scripts": {
-    "data-provider": "cd .. && npm run build:data-provider",
-    "build:file": "cross-env NODE_ENV=production vite build --debug > vite-output.log 2>&1",
     "build": "cross-env NODE_ENV=production vite build",
-    "build:ci": "cross-env NODE_ENV=development vite build --mode ci",
     "dev": "cross-env NODE_ENV=development vite",
-    "preview-prod": "cross-env NODE_ENV=development vite preview",
-    "test": "cross-env NODE_ENV=development jest --watch",
-    "test:ci": "cross-env NODE_ENV=development jest --ci",
-    "b:test": "NODE_ENV=test bunx jest --watch",
-    "b:build": "NODE_ENV=production bun --bun vite build",
-    "b:dev": "NODE_ENV=development bunx vite"
+    "preview": "cross-env NODE_ENV=development vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/danny-avila/LibreChat.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/danny-avila/LibreChat/issues"
-  },
-  "homepage": "https://librechat.ai",
   "dependencies": {
     "@ariakit/react": "^0.4.15",
     "@ariakit/react-core": "^0.4.15",
@@ -70,7 +51,6 @@
     "i18next-browser-languagedetector": "^8.0.3",
     "input-otp": "^1.4.2",
     "js-cookie": "^3.0.5",
-    "librechat-data-provider": "*",
     "lodash": "^4.17.21",
     "lucide-react": "^0.394.0",
     "match-sorter": "^6.3.4",
@@ -150,4 +130,4 @@
     "vite-plugin-node-polyfills": "^0.23.0",
     "vite-plugin-pwa": "^0.21.2"
   }
-}
+} 

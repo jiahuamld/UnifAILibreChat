@@ -13,6 +13,7 @@ import TermsAndConditionsModal from '~/components/ui/TermsAndConditionsModal';
 import { useUserTermsQuery, useGetStartupConfig } from '~/data-provider';
 import { Nav, MobileNav } from '~/components/Nav';
 import { Banner } from '~/components/Banners';
+import { useSession } from 'next-auth/react';
 
 export default function Root() {
   const [showTerms, setShowTerms] = useState(false);
@@ -28,10 +29,22 @@ export default function Root() {
   const fileMap = useFileMap({ isAuthenticated });
   const search = useSearch({ isAuthenticated });
 
+  // next-auth 用户状态检测
+  const { data: session, status } = useSession();
+
   const { data: config } = useGetStartupConfig();
   const { data: termsData } = useUserTermsQuery({
     enabled: isAuthenticated && config?.interface?.termsOfService?.modalAcceptance === true,
   });
+  useEffect(() => {
+    console.log('session_____', session,status);
+    // // 检查登录状态并打印结果
+    // if (status === 'authenticated' && session?.user?.name) {
+    //   console.log('用户已登录', session.user);
+    // } else {
+    //   console.log('用户未登录');
+    // }
+  }, [status, session]);
 
   useEffect(() => {
     if (termsData) {

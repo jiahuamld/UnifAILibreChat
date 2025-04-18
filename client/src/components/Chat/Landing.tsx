@@ -172,7 +172,7 @@ export default function Landing({ centerFormOnLanding }: { centerFormOnLanding: 
               text={
                 typeof startupConfig?.interface?.customWelcome === 'string'
                   ? getGreeting()
-                  : getGreeting() + (user?.name ? ', ' + user.name : '')
+                  : 'UNIFAI ' + getGreeting() + (user?.name ? ', ' + user.name : '')
               }
               className="text-2xl font-medium text-text-primary sm:text-4xl"
               delay={50}

@@ -4,67 +4,21 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { compression } from 'vite-plugin-compression2';
-// @ts-ignore
-import mkcert from 'vite-plugin-mkcert';
 import type { Plugin } from 'vite';
 
-// https://vitejs.dev/config/
+// 为Vercel部署优化的Vite配置
 export default defineConfig({
-  server: {
-    host: 'chat.uniq.unifai.network',
-    port: 9443,
-    strictPort: false,
-    // @ts-ignore - TypeScript错误，但Vite实际支持布尔值
-    https: true,
-    proxy: {
-      '/api/auth': {
-        target: 'https://uniq.unifai.network',
-        changeOrigin: true,
-        secure: false,
-        configure: (proxy, _options) => {
-          proxy.on('proxyReq', (proxyReq, req, res) => {
-            // 确保保留原始请求中的cookie
-            if (req.headers.cookie) {
-              proxyReq.setHeader('Cookie', req.headers.cookie);
-            }
-          });
-          
-          proxy.on('proxyRes', (proxyRes, req, res) => {
-            // 记录响应头以便调试
-            console.log('从uniq.unifai.network返回的认证响应头:', proxyRes.headers);
-            
-            // 修改响应头允许cookie共享
-            if (proxyRes.headers['set-cookie']) {
-              const cookies = proxyRes.headers['set-cookie'].map(cookie =>
-                cookie.replace(/Domain=[^;]+/, 'Domain=.unifai.network')
-              );
-              proxyRes.headers['set-cookie'] = cookies;
-            }
-          });
-        }
-      },
-      '/api': {
-        target: 'http://localhost:3080',
-        changeOrigin: true,
-      },
-      '/oauth': {
-        target: 'http://localhost:3080',
-        changeOrigin: true,
-      },
-    },
-  },
-  // Set the directory where environment variables are loaded from and restrict prefixes
-  envDir: '../',
+  // 环境变量目录和前缀设置
+  envDir: './',
   envPrefix: ['VITE_', 'SCRIPT_', 'DOMAIN_', 'ALLOW_'],
   plugins: [
-    mkcert(), // 自动生成和管理SSL证书
     react(),
     nodePolyfills(),
     VitePWA({
-      injectRegister: 'auto', // 'auto' | 'manual' | 'disabled'
-      registerType: 'autoUpdate', // 'prompt' | 'autoUpdate'
+      injectRegister: 'auto', 
+      registerType: 'autoUpdate',
       devOptions: {
-        enabled: false, // disable service worker registration in development mode
+        enabled: false,
       },
       useCredentials: true,
       workbox: {
@@ -118,12 +72,11 @@ export default defineConfig({
   ],
   publicDir: './public',
   build: {
-    sourcemap: process.env.NODE_ENV === 'development',
+    sourcemap: false,
     outDir: './dist',
     minify: 'terser',
     rollupOptions: {
       preserveEntrySignatures: 'strict',
-      // external: ['uuid'],
       output: {
         manualChunks(id: string) {
           if (id.includes('node_modules')) {
@@ -170,10 +123,6 @@ export default defineConfig({
           return 'assets/[name].[hash][extname]';
         },
       },
-      /**
-       * Ignore "use client" warning since we are not using SSR
-       * @see {@link https://github.com/TanStack/query/pull/5161#issuecomment-1477389761 Preserve 'use client' directives TanStack/query#5161}
-       */
       onwarn(warning, warn) {
         if (warning.message.includes('Error when using sourcemap')) {
           return;
@@ -201,10 +150,9 @@ export function sourcemapExclude(opts?: SourcemapExclude): Plugin {
       if (opts?.excludeNodeModules && id.includes('node_modules')) {
         return {
           code,
-          // https://github.com/rollup/rollup/blob/master/docs/plugin-development/index.md#source-code-transformations
           map: { mappings: '' },
         };
       }
     },
   };
-}
+} 
