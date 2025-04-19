@@ -29,7 +29,7 @@ const App = () => {
 
   return (
     <SessionProvider
-      basePath="/api/auth"
+      basePath="/api/uniqauth"
       refetchInterval={300}
       refetchOnWindowFocus={true}
       options={authOptions}
