@@ -22,7 +22,8 @@ const LoginStatus = () => {
       }, 1000);
     } else if (redirectCounter === 0) {
       // 跳转到主站首页
-      window.location.href = 'https://uniq.unifai.network';
+      console.log('跳转到主站首页');
+      // window.location.href = 'https://uniq.unifai.network';
     }
     
     return () => {
@@ -32,7 +33,8 @@ const LoginStatus = () => {
 
   // 立即跳转到主站
   const redirectToLogin = () => {
-    window.location.href = 'https://uniq.unifai.network';
+    // window.location.href = 'https://uniq.unifai.network';
+    console.log('跳转到主站登录');
   };
 
   const toggleDetails = () => {

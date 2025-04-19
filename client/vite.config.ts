@@ -17,7 +17,7 @@ export default defineConfig({
     // @ts-ignore - TypeScript错误，但Vite实际支持布尔值
     https: true,
     proxy: {
-      '/api/auth': {
+      '/api/auth/session': {
         target: 'https://uniq.unifai.network',
         changeOrigin: true,
         secure: false,
